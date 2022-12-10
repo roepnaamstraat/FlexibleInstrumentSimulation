@@ -27,20 +27,23 @@ $$
 \boldsymbol{F}^{(e)} = \boldsymbol{D} \circ \boldsymbol{F}^{(x)} \tag{3}
 $$
 
-█(F^((e) )=D∘F^((x) )  #(A.3) )
-Both F^((e) ) and F^((x) ) are unknown. However, we can obtain the first order geometric transfer functions DF^((e) ) and DF^((x) ), and second order geometric functions D^2 F^((e) ) and D^2 F^((x) )  in terms of the known derivative maps DD and D^2 D. Then, from an initial duple (x_0,e_0) we can find the new duple after one time step from the Taylor series expansion:
-x_1=x_0+DF_0^((x) )⋅(∆x^((m) ),∆e^((m) ) )+1/2 (D^2 F_0^((x) )⋅(∆x^((m) ),∆e^((m) ) ))∙(∆x^((m) ),∆e^((m) ) )   
-█(e_1=e_0+DF_0^((e) )⋅(∆x^((m) ),∆e^((m) ) )+1/2 (D^2 F_0^((e) )⋅(∆x^((m) ),∆e^((m) ) ))∙(∆x^((m) ),∆e^((m) ) )                                    #(A.4) )
-To guarantee that the configuration and deformations remain interlinked, an iteration process using a Newton-Raphson scheme is applied in SPACAR to ensure that D^((m) ) (x_1 )=e_1^((m)) holds. This scheme is then applied to calculate the sequence of generalised coordinates (x^((m) ),e^((m))).
+Both $\boldsymbol{F}^{(e)}$ and $\boldsymbol{F}^{(x)}$ are unknown. However, we can obtain the first order geometric transfer functions $\text{D}\boldsymbol{F}^{(e)}$ and $\text{D}\boldsymbol{F}^{(x)}$, and second order geometric functions $\text{D}^2\boldsymbol{F}^{(e)}$ and $\text{D}^2\boldsymbol{F}^{(x)}$ in terms of the known derivative maps $\text{D}\boldsymbol{D}$ and $\text{D}^2\boldsymbol{D}$. Then, from an initial duple ($\boldsymbol{x}$<sub>0</sub>, $\boldsymbol{e}$<sub>0</sub>) we can find the new duple after one time step from the Taylor series expansion:
 
-A.2 Dynamic model
+$$
+\boldsymbol{x}_ 1 = \boldsymbol{x}_ 0 + \text{D}\boldsymbol{F}_ 0^{(x)}⋅(\Delta \boldsymbol{x}^{(m)},\Delta \boldsymbol{e}^{(m)}) + 1/2 (\text{D}^2\boldsymbol{F}_ 0^{(x)}⋅(\Delta \boldsymbol{x}^{(m)},\Delta \boldsymbol{e}^{(m)}))⋅(\Delta \boldsymbol{x}^{(m)},\Delta \boldsymbol{e}^{(m)}))
+$$
+$$
+\boldsymbol{e}_ 1 = \boldsymbol{e}_ 0 + \text{D}\boldsymbol{F}_ 0^{(e)}⋅(\Delta \boldsymbol{x}^{(m)},\Delta \boldsymbol{e}^{(m)}) + 1/2 (\text{D}^2\boldsymbol{F}_ 0^{(e)}⋅(\Delta \boldsymbol{x}^{(m)},\Delta \boldsymbol{e}^{(m)}))⋅(\Delta \boldsymbol{x}^{(m)},\Delta \boldsymbol{e}^{(m)})) \tag{3}
+$$
+
+To guarantee that the configuration and deformations remain interlinked, an iteration process using a Newton-Raphson scheme is applied in SPACAR to ensure that $\boldsymbol{D}^{(m)} (\boldsymbol{x}_ 1)=\boldsymbol{e}_ 1^{(m)}$ holds. This scheme is then applied to calculate the sequence of generalised coordinates $(\boldsymbol{x}^{(m)},\boldsymbol{e}^{(m)})$.
+
+### Dynamics
 In the forward dynamic analysis, we want to obtain the mechanism’s configuration, velocities and accelerations from prescribed nodal loads through a set of equations of motion. These equations are derived from the Lagrangian form of d’Alembert’s principle of virtual work. For rigid elements this analysis is trivial and uses a lumped mass formulation. However, for flexible elements the dynamics are influenced by both their inertia and stiffness properties, and hence a consistent mass formulation is used in SPACAR. This assumes that the position along a flexible element can be described using polynomial interpolation. The derivation of the consistent mass matrix is based on the concept of virtual power. A three-dimensional deformed beam with nodes p and q can be described by six Cartesian coordinates [〖x^p〗^((k)),〖x^q〗^((k)) ] and two sets of Euler parameters [〖λ^p〗^((k)),〖λ^q〗^((k)) ]. Additionally, six deformation modes can be distinguished for the beam: elongation e_1^((k)), torsion e_2^((k)), and four parameters for bending e_(3-6)^((k)) (see Fig. 2). As such, we can define a position vector r^s that describes the location of point s at normalised distance ξ from point p of the deflected beam as a function of bending deformation modes e_(3-6) using cubic polynomial interpolation. From the principle of virtual work we then obtain:
 f∙x-σ∙DDx-ml 01rs∙rsdξ=0#(A.5)
 Here, the dot is used to denote the time derivative, f the nodal loads (including forces and torques), σ the stresses, and m the mass and l the length of the element. Stresses σ are calculated using Hooke’s law. The right part of Eq. A.5 can be further evaluated by differentiating r^s with respect to time (twice), to obtain the consistent mass matrices and convective inertia tensors associated with quadratic velocity terms. The equations of motion can now be derived again using the principle of virtual power, and after arranging:
 DFT M DF xmem=DFT f-fin-σ-σin #(A.6)
 Here, DF^T  M DF is the system mass matrix, containing both consistent and lumped mass matrices, and f_in and σ_in are the inertia forces and stresses respectively. Eq. A.6 can be integrated numerically to obtain the configuration and deformations of the mechanism and their velocities at an adjacent time step. Finally, reaction forces and internal stresses may be calculated from kinetostatic analysis.
-
-### Dynamics
 
 ## Requirements
 
