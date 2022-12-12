@@ -153,9 +153,10 @@ SPACAR may give the following MATLAB error when running the code: "ERROR while p
 authors of SPACAR.
 
 ## Installation
-The zip-file containing SPACAR (full) 2017 ([link](https://www.spacar.nl/wiki/doku.php?id=installation)) needs to be downloaded and extracted in a new folder 'spacar'. The zip-file **FIXME** -containing the relevant MATLAB codes and other files required for the simulations- needs to be downloaded from this repository and extracted in a different folder. The path to the SPACAR installation folder must be added to the path in MATLAB in order to run the code.
-
-
+1. Download the zip-file containing SPACAR (full) 2017 ([link](https://www.spacar.nl/wiki/doku.php?id=installation)) and extract this in a new folder 'spacar'.
+2. Download the zip-file **FIXME** -containing the relevant MATLAB codes and other files required for the simulations- from this repository and extract this in a different folder. 
+3. Download the $\text{distance2curve.m}$ function must be downloaded and add to this folder. 
+4. Add the path to the SPACAR installation folder to the path in MATLAB in order to run the code.
 
 ## References
 [1] Jonker B. (1988). _A Finite Element Dynamic Analysis of Flexible Spatial Mechanisms and Manipulators_. (TR diss 1625) [Doctoral dissertation, Delft University of Technology]. Institutional Repository ([link](https://repository.tudelft.nl/islandora/object/uuid:3f9f742f-1692-4cb8-8dd7-95c2d6024fd0?collection=research/)). p. 1-155.
