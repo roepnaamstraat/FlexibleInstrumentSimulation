@@ -1,0 +1,206 @@
+# SPACAR FILE - RIGID ANALYSIS OF BT CATHETER IN S-SHAPED CHANNEL
+% KINEMATICS
+% Specifying elements
+% Elt. nr nodes        initial y-axis
+BEAM   1  1  2  3  4   0. 1. 0.      
+BEAM   2  3  4  5  6   0. 1. 0.           
+BEAM   3  5  6  7  8   0. 1. 0.           
+BEAM   4  7  8  9  10  0. 1. 0.          
+BEAM   5  9  10 11 12  0. 1. 0.      
+BEAM   6  11 12 13 14  0. 1. 0.   
+BEAM   7  13 14 15 16  0. 1. 0.   
+BEAM   8  15 16 17 18  0. 1. 0.  
+BEAM   9  17 18 19 20  0. 1. 0.   
+BEAM   10 19 20 21 22  0. 1. 0. 
+BEAM   11 21 22 23 24  0. 1. 0.  
+BEAM   12 23 24 25 26  0. 1. 0.  
+BEAM   13 25 26 27 28  0. 1. 0.      
+BEAM   14 27 28 29 30  0. 1. 0.           
+BEAM   15 29 30 31 32  0. 1. 0.           
+BEAM   16 31 32 33 34  0. 1. 0.          
+BEAM   17 33 34 35 36  0. 1. 0.      
+BEAM   18 35 36 37 38  0. 1. 0.   
+BEAM   19 37 38 39 40  0. 1. 0.   
+BEAM   20 39 40 41 42  0. 1. 0.  
+BEAM   21 41 42 43 44  0. 1. 0.   
+BEAM   22 43 44 45 46  0. 1. 0. 
+BEAM   23 45 46 47 48  0. 1. 0.  
+BEAM   24 47 48 49 50  0. 1. 0.  
+
+% Initial configuration
+% node x     y    z
+X 1    0.000 0.00 0.00
+X 3   -0.005 0.00 0.00
+X 5   -0.010 0.00 0.00
+X 7   -0.015 0.00 0.00
+X 9   -0.020 0.00 0.00
+X 11  -0.025 0.00 0.00
+X 13  -0.030 0.00 0.00
+X 15  -0.035 0.00 0.00
+X 17  -0.040 0.00 0.00
+X 19  -0.045 0.00 0.00
+X 21  -0.050 0.00 0.00
+X 23  -0.055 0.00 0.00
+X 25  -0.060 0.00 0.00
+X 27  -0.065 0.00 0.00
+X 29  -0.070 0.00 0.00
+X 31  -0.075 0.00 0.00
+X 33  -0.080 0.00 0.00
+X 35  -0.085 0.00 0.00
+X 37  -0.090 0.00 0.00
+X 39  -0.095 0.00 0.00
+X 41  -0.100 0.00 0.00
+X 43  -0.105 0.00 0.00
+X 45  -0.110 0.00 0.00
+X 47  -0.115 0.00 0.00
+X 49  -0.120 0.00 0.00
+
+% Dynamic DoF
+%    Emt.  y,z (Euler) direction 
+DYNX 1     2 3 
+DYNX 2     2 3 4
+DYNX 3     2 3 
+DYNX 4     2 3 4
+DYNX 5     2 3 
+DYNX 6     2 3 4
+DYNX 7     2 3 
+DYNX 8     2 3 4
+DYNX 9     2 3 
+DYNX 10    2 3 4
+DYNX 11    2 3 
+DYNX 12    2 3 4
+DYNX 13    2 3 
+DYNX 14    2 3 4
+DYNX 15    2 3 
+DYNX 16    2 3 4
+DYNX 17    2 3 
+DYNX 18    2 3 4
+DYNX 19    2 3 
+DYNX 20    2 3 4
+DYNX 21    2 3 
+DYNX 22    2 3 4
+DYNX 23    2 3 
+DYNX 24    2 3 4
+DYNX 25    2 3 
+DYNX 26    2 3 4
+DYNX 27    2 3 
+DYNX 28    2 3 4
+DYNX 29    2 3 
+DYNX 30    2 3 4
+DYNX 31    2 3 
+DYNX 32    2 3 4
+DYNX 33    2 3 
+DYNX 34    2 3 4
+DYNX 35    2 3 
+DYNX 36    2 3 4
+DYNX 37    2 3 
+DYNX 38    2 3 4
+DYNX 39    2 3 
+DYNX 40    2 3 4
+DYNX 41    2 3 
+DYNX 42    2 3 4
+DYNX 43    2 3 
+DYNX 44    2 3 4
+DYNX 45    2 3 
+DYNX 46    2 3 4
+DYNX 47    2 3 
+DYNX 48    2 3 4
+
+% Input and fixed DoF 
+INPUTX 49 1
+FIX    49 2
+FIX    49 3
+FIX    50 
+
+% Calculable deformations
+%    Emt. Deformation parameter
+RLSE 1    2 3 4 5 6
+RLSE 2    2 3 4 5 6
+RLSE 3    2 3 4 5 6
+RLSE 4    2 3 4 5 6
+RLSE 5    2 3 4 5 6
+RLSE 6    2 3 4 5 6
+RLSE 7    2 3 4 5 6
+RLSE 8    2 3 4 5 6
+RLSE 9    2 3 4 5 6
+RLSE 10   2 3 4 5 6
+RLSE 11   2 3 4 5 6
+RLSE 12   2 3 4 5 6
+RLSE 13   2 3 4 5 6
+RLSE 14   2 3 4 5 6
+RLSE 15   2 3 4 5 6
+RLSE 16   2 3 4 5 6
+RLSE 17   2 3 4 5 6
+RLSE 18   2 3 4 5 6
+RLSE 19   2 3 4 5 6
+RLSE 20   2 3 4 5 6
+RLSE 21   2 3 4 5 6
+RLSE 22   2 3 4 5 6
+RLSE 23   2 3 4 5 6
+RLSE 24   2 3 4 5 6
+
+END
+HALT
+
+% DYNAMICS
+% m/l  Emt. value
+EM 1   1.0 0.1
+EM 2   1.0 0.1
+EM 3   1.0 0.1
+EM 4   1.0 0.1
+EM 5   1.0 0.1
+EM 6   1.0 0.1
+EM 7   1.0 0.1
+EM 8   1.0 0.1
+EM 9   1.0 0.1
+EM 10  1.0 0.1
+EM 11  1.0 0.1
+EM 12  1.0 0.1
+EM 13  1.0 0.1
+EM 14  1.0 0.1
+EM 15  1.0 0.1
+EM 16  1.0 0.1
+EM 17  1.0 0.1
+EM 18  1.0 0.1
+EM 19  1.0 0.1
+EM 20  1.0 0.1
+EM 21  1.0 0.1
+EM 22  1.0 0.1
+EM 23  1.0 0.1
+EM 24  1.0 0.1
+
+% Flexural and torsional rigidity
+%      Emt.Value 
+ESTIFF 1   0 0.0093 0.012 0.012 
+ESTIFF 2   0 0.0093 0.012 0.012 
+ESTIFF 3   0 0.0093 0.012 0.012
+ESTIFF 4   0 0.0093 0.012 0.012 
+ESTIFF 5   0 0.0093 0.012 0.012  
+ESTIFF 6   0 0.0093 0.012 0.012
+ESTIFF 7   0 0.0093 0.012 0.012 
+ESTIFF 8   0 0.0093 0.012 0.012
+ESTIFF 9   0 0.0093 0.012 0.012
+ESTIFF 10  0 0.0093 0.012 0.012
+ESTIFF 11  0 0.0093 0.012 0.012  
+ESTIFF 12  0 0.0093 0.012 0.012
+ESTIFF 13  0 0.0093 0.012 0.012 
+ESTIFF 14  0 0.0093 0.012 0.012 
+ESTIFF 15  0 0.0093 0.012 0.012
+ESTIFF 16  0 0.0093 0.012 0.012 
+ESTIFF 17  0 0.0093 0.012 0.012  
+ESTIFF 18  0 0.0093 0.012 0.012
+ESTIFF 19  0 0.0093 0.012 0.012 
+ESTIFF 20  0 0.0093 0.012 0.012
+ESTIFF 21  0 0.0093 0.012 0.012
+ESTIFF 22  0 0.0093 0.012 0.012
+ESTIFF 23  0 0.0093 0.012 0.012  
+ESTIFF 24  0 0.0093 0.012 0.012
+
+% Simulation details
+USERSIG FFESFVA       % user force input
+TIMESTEP 1.2 8000     % time and number of steps
+USERINP FFESMVA       % user motion input
+ERROR 0.0001 0.0001   % absolute and relative errors
+
+END
+END
