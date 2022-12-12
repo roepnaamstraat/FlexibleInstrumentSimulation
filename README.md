@@ -154,7 +154,7 @@ authors of SPACAR.
 
 ## Installation
 1. Download the zip-file containing SPACAR (full) 2017 ([link](https://www.spacar.nl/wiki/doku.php?id=installation)) and extract this in a new folder 'spacar'.
-2. Download the zip-file **FIXME** -containing the relevant MATLAB codes and other files required for the simulations- from this repository and extract this in a different folder. 
+2. Download the contents of the folder 'Functions' -containing the relevant MATLAB codes and other files required for the simulations- from this repository and extract this in a different folder. 
 3. Download the $\text{distance2curve.m}$ function must be downloaded and add to this folder. 
 4. Add the path to the SPACAR installation folder to the path in MATLAB in order to run the code.
 
