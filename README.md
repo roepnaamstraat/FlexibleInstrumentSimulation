@@ -1,8 +1,8 @@
 # Simulation of flexible instruments in curved channels
 ## Brief summary
-This repository contains the relevant files for performing simulations of the behaviour of flexible instruments in curved channels using MATLAB and the computer program SPACAR. One application, that of simulating brachytherapy (BT) source cable behaviour and needle insertion in the curved applicator channels, is described in the article 'Multibody dynamic modelling of the behaviour of flexible instruments used in cervical cancer brachytherapy'. For these computer models, BT instruments were discretised in finite elements. Simulations were performed in SPACAR by formulating nodal contact force and motion input models, and defining kinematic and dynamic modules. Example files for performing rigid and flexible multibody simulation of a needle in an S-shaped channel are included in this repository. These files may be modified to simulate deformations and associated forces and moments of any type of slender elastic rod inside a rigid (circular) channel or environment.
+This repository contains the relevant files for performing simulations of the behaviour of flexible instruments in curved channels using MATLAB and the computer program SPACAR. One application, that of simulating brachytherapy (BT) source cable behaviour and needle insertion in the curved applicator channels, is described in the article 'Multibody dynamic modelling of the behaviour of flexible instruments used in cervical cancer brachytherapy'. For these computer models, BT instruments were discretised in finite elements. Simulations were performed in the full version of SPACAR by formulating nodal contact force and motion input models, and defining kinematic and dynamic modules. Example files for performing rigid and flexible multibody simulation of a needle in an S-shaped channel are included in this repository. These files may be modified to simulate deformations and associated forces and moments of any type of slender elastic rod inside a rigid (circular) channel or environment.
 
-The code in this repository was used in:
+The code in this repository is a simplification of the code used in:
 - **Title**: Multibody dynamic modelling of the behaviour of flexible instruments used in cervical cancer brachytherapy.
 - **Authors**: Robin Straathof, Jaap P. Meijaard, Sharline van Vliet-Pérez, Inger-Karine K. Kolkman-Deurloo, Remi A. Nout, Ben J.M. Heijmen, Linda S.G.L. Wauben, Jenny Dankelman, and Nick J. van de Berg.
 - **Journal**: Medical Physics
@@ -142,15 +142,20 @@ _In same folder:_
 - FRESFVA.m:      containing user-defined force routine for rigid analysis
 - FRESMVA.m:      containing user-defined motion routine for rigid analysis
 
-- circle3D.m:     plotting a circle in 3D
 - distance2curve.m:   computing distance to curve by D'Errico [[4]](#references)
 - LiePose.m:      computing centreline curve using Lie group / algebra theory
 
 _In other folder:_
 - SPACAR 2017 needs to be installed and linked to MATLAB
 
+## Known bugs and issues
+SPACAR may give the following MATLAB error when running the code: "ERROR while processing kinematic data. [...]". This may be caused by a limitation in the size of the analysis that can be performed using the standard downloadable version (see SPACAR manual). In case your requirements are larger, you may contact the
+authors of SPACAR.
+
 ## Installation
 The zip-file containing SPACAR (full) 2017 ([link](https://www.spacar.nl/wiki/doku.php?id=installation)) needs to be downloaded and extracted in a new folder 'spacar'. The zip-file **FIXME** -containing the relevant MATLAB codes and other files required for the simulations- needs to be downloaded from this repository and extracted in a different folder. The path to the SPACAR installation folder must be added to the path in MATLAB in order to run the code.
+
+
 
 ## References
 [1] Jonker B. (1988). _A Finite Element Dynamic Analysis of Flexible Spatial Mechanisms and Manipulators_. (TR diss 1625) [Doctoral dissertation, Delft University of Technology]. Institutional Repository ([link](https://repository.tudelft.nl/islandora/object/uuid:3f9f742f-1692-4cb8-8dd7-95c2d6024fd0?collection=research/)). p. 1-155.
