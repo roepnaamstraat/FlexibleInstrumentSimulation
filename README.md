@@ -1,6 +1,14 @@
 # Simulation of flexible instruments in curved channels
 ## Brief summary
-This repository contains the relevant files for performing simulations of the behaviour of flexible instruments in curved channels using MATLAB and the computer program SPACAR. One application, that of simulating brachytherapy (BT) source cable behaviour and needle insertion in the curved applicator channels, is described in the article 'Multibody dynamic modelling of the behaviour of flexible instruments used in cervical cancer brachytherapy' (doi: **FIXME**). For these computer models, BT instruments were discretised in finite elements. Simulations were performed in SPACAR by formulating nodal contact force and motion input models, and defining kinematic and dynamic modules. Example files for performing rigid and flexible multibody simulation of a needle in an S-shaped channel are included in this repository, and may be modified to model deformations and associated forces and moments of any type of slender elastic rod inside a rigid (circular) channel or environment.
+This repository contains the relevant files for performing simulations of the behaviour of flexible instruments in curved channels using MATLAB and the computer program SPACAR. One application, that of simulating brachytherapy (BT) source cable behaviour and needle insertion in the curved applicator channels, is described in the article 'Multibody dynamic modelling of the behaviour of flexible instruments used in cervical cancer brachytherapy'. For these computer models, BT instruments were discretised in finite elements. Simulations were performed in SPACAR by formulating nodal contact force and motion input models, and defining kinematic and dynamic modules. Example files for performing rigid and flexible multibody simulation of a needle in an S-shaped channel are included in this repository. These files may be modified to simulate deformations and associated forces and moments of any type of slender elastic rod inside a rigid (circular) channel or environment.
+
+The code in this repository was used in:
+- **Title**: Multibody dynamic modelling of the behaviour of flexible instruments used in cervical cancer brachytherapy.
+- **Authors**: Robin Straathof, Jaap P. Meijaard, Sharline van Vliet-Pérez, Inger-Karine K. Kolkman-Deurloo, Remi A. Nout, Ben J.M. Heijmen, Linda S.G.L. Wauben, Jenny Dankelman, and Nick J. van de Berg.
+- **Journal**: Medical Physics
+- **DOI**: **FIXME**
+- **Cite repository**: **FIXME** (4TU.Researchdata)
+- **License**: see license file in repository.
 
 ## About SPACAR
 The computer program [SPACAR](https://www.spacar.nl/) is based on the non-linear finite element theory for multi-degree of freedom mechanisms. The program is capable of analysing the dynamics of planar and spatial mechanisms and manipulators with flexible links and treats the general case of coupled large displacement motion and small elastic deformation. The motion can be simulated by solving the complete set of non-linear equations of motion or by using the so-called perturbation method. The computational efficiency of the latter method can be improved further by applying modal techniques.
@@ -75,7 +83,7 @@ $$
 Similarly, the stiffness of the torsion springs in the axial direction of the instrument can be found via $S_ {rig,1} = \frac{GJ}{l}$. 
 
 ### Contact detection and friction model 
-To guide the flexible instruments through the channels, contact points must be determined, loads must be calculated and translated to loads on the nodes of the model.  For each node of the instrument, $\boldsymbol{x}^p$, the Euclidean distance to the centreline is computed using the MATLAB function $\text{distance2curve}$ [[4]](#references). This function returns the distance to the centreline, $d_c$, and the closest point on the centreline p^p. The centreline of the channel may be modelled as any type of curve, e.g. a piecewise curve. The normal and tangent vectors, which are required for the normal and friction forces respectively, can then be obtained via:
+To guide the flexible instruments through the channels, contact points must be determined, loads must be calculated and translated to loads on the nodes of the model.  For each node of the instrument, $\boldsymbol{x}^p$, the Euclidean distance to the centreline is computed using the MATLAB function $\text{distance2curve}$ [[4]](#references). This function returns the distance to the centreline, $d_c$, and the closest point on the centreline $\boldsymbol{p}^p$. The centreline of the channel may be modelled as any type of curve, e.g. a piecewise curve. The normal and tangent vectors, which are required for the normal and friction forces respectively, can then be obtained via:
 
 $$
 \boldsymbol{n} = \frac{\boldsymbol{x}^p-\boldsymbol{p}^p}{||\boldsymbol{x}^p-\boldsymbol{p}^p||}, \text{  } \boldsymbol{t} = \frac{\boldsymbol{\dot{x}}^p-v_ {c,n} \boldsymbol{n}}{||\boldsymbol{\dot{x}}^p-v_ {c,n} \boldsymbol{n}||} \tag{8}
@@ -87,7 +95,7 @@ $$
 \boldsymbol{v}_ {c} = \boldsymbol{\dot{x}}^p + r_o \boldsymbol{ω}^p \times \boldsymbol{n} \tag{9}
 $$
 
-The angular velocity is calculated from the Euler parameters via $(0,\boldsymbol{ω}^p)^T= \bar{\boldsymbol{Q}}^{p^{T}} \boldsymbol{\dot{\lambda}}^p$, where $\bar{\boldsymbol{Q}}^{p}$ is a quaternion matrix [[5]](#references). Normal forces are computed using the contact model by Khatait et al. which distinguishes three different regions, characterised by the parameters $a$ and $b$ (see Fig. 2) [[6]](#references). This model assumes that the normal force increases linearly with increasing wall penetration. A transition region in-between is considered to aid the convergence of SPACAR:
+The angular velocity is calculated from the Euler parameters via $(0,\boldsymbol{ω}^p)^T= \bar{\boldsymbol{Q}}^{p^{T}} \boldsymbol{\dot{\lambda}}^p$, where $\bar{\boldsymbol{Q}}^{p}$ is a quaternion matrix [[5]](#references). Normal forces are computed using the contact model by Khatait et al. which distinguishes three different regions, characterised by the parameters $a$ and $b$ (see [Fig. 2](#figure2)) [[6]](#references). This model assumes that the normal force increases linearly with increasing wall penetration. A transition region in-between is considered to aid the convergence of SPACAR:
 - No contact: $d_c \< a$;
 * Transition zone: $a≤d_c≤b$. Here the wall stiffness and damping increase with increasing centreline deviation according to a second order polynomial;
 + Full contact zone:  $b \< d_c$. Here the wall stiffness is linear in penetration depth.
@@ -112,17 +120,37 @@ $$
 {\left\lbrace \matrix{ \boldsymbol{F} = \boldsymbol{F}_ {t} + \boldsymbol{F}_ {n} \cr \boldsymbol{M} = r_o \boldsymbol{n} \times \boldsymbol{F}_ {t} } \right\rbrace} \tag{12}   
 $$
 
-The extension of this model to channels with convex polygonal cross-sections can be done relatively easy with a series of if-statements.  
+The extension of this model to channels with convex polygonal cross-sections can be done relatively easy with a series of if-statements (see [Fig. 2](#figure2)).  
 
-| <img src="20210607_RS_PSD_BeamDeformation_V5.png" width="445" height="350">|
+| <img src="20220630_RS_PSD_ContactModel_V3-01.png" width="890" height="230">|
 |:--:| 
 | <a name="figure2"></a> **Figure 2**. (a) Contact detection model for circular and U-shaped channels, (b)  Normal force model in a circular channel. Figure adapted from Khatait et al. [[6]](#references).|
 
 ## Implementation
+After the path to the SPACAR installation folder is added in MATLAB, SPACAR can be activated using input from a $\text{.dat}$ file in MATLAB using the command ( $\text{spacar(\[mode\],\[filename\])}$ ). This input file contains the specification of kinematic and dynamic properties of the instrument, the numerical solver and integration settings, and links to user-specified force and input motion files. The $\text{.dat}$ files may be edited using any type of text editor (e.g. Notepad). Input forces and motion are specified in $\text{.m}$ functions. During the simulation, SPACAR writes data to $\text{.sbd}$ files and stores these in MATLAB arrays. Visualisation of the instrument's behaviour can be done using SpaVisual (SPACAR's visualisation tool), or in MATLAB.
 
 ## Requirements
+This code was written and tested in MATLAB R2021b. The code provided here requires the following inputs:
+
+_In same folder:_
+- m20221212_RS_WP2_MAT_CatheterInsertionForce_V5.m: main MATLAB file with example simulation
+
+- RIG_CAT_S.dat:  containing SPACAR inputs for rigid analysis    
+- FLEX_CAT_S.dat: containing SPACAR inputs for flexible analysis
+- FFESFVA.m:      containing user-defined force routine for flexible analysis
+- FFESMVA.m:      containing user-defined motion routine for flexible analysis
+- FRESFVA.m:      containing user-defined force routine for rigid analysis
+- FRESMVA.m:      containing user-defined motion routine for rigid analysis
+
+- circle3D.m:     plotting a circle in 3D
+- distance2curve.m:   computing distance to curve by D'Errico [[4]](#references)
+- LiePose.m:      computing centreline curve using Lie group / algebra theory
+
+_In other folder:_
+- SPACAR 2017 needs to be installed and linked to MATLAB
 
 ## Installation
+The zip-file containing SPACAR (full) 2017 ([link](https://www.spacar.nl/wiki/doku.php?id=installation)) needs to be downloaded and extracted in a new folder 'spacar'. The zip-file **FIXME** -containing the relevant MATLAB codes and other files required for the simulations- needs to be downloaded from this repository and extracted in a different folder. The path to the SPACAR installation folder must be added to the path in MATLAB in order to run the code.
 
 ## References
 [1] Jonker B. (1988). _A Finite Element Dynamic Analysis of Flexible Spatial Mechanisms and Manipulators_. (TR diss 1625) [Doctoral dissertation, Delft University of Technology]. Institutional Repository ([link](https://repository.tudelft.nl/islandora/object/uuid:3f9f742f-1692-4cb8-8dd7-95c2d6024fd0?collection=research/)). p. 1-155.
@@ -137,3 +165,4 @@ The extension of this model to channels with convex polygonal cross-sections can
 
 [6] Khatait, J.P., Krijnen, M., Meijaard, J.P., Aarts, R.G., Brouwer, D.M., & Herder, J.L. (2011, January). Modelling and simulation of a flexible endoscopic surgical instrument in a tube. In _ASME International Mechanical Engineering Congress and Exposition (Vol. 54884)_. p. 557-566.
 
+[7] Armstrong, B., & De Wit, C.C. (1996). Friction modeling and compensation. _The control handbook_, 77, p. 1369-1382.
