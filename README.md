@@ -57,7 +57,7 @@ Here, $\text{D}\boldsymbol{F}^T \boldsymbol{M} \text{D}\boldsymbol{F}$ is the sy
 
 | <img src="20210607_RS_PSD_BeamDeformation_V5.png" width="445" height="350">|
 |:--:| 
-| <a name="figure1"></a> **Figure 1**. Reference beam configuration (left) and two representations of deformed beam configurations (middle and right). The beam configuration in the middle shows six deformation modes for a flexible beam element: elongation $e_ {1}$, torsion $e_ {2}$, and bending $e_ {3-6}$. The beam configuration on the right is similar to the configuration in the middle, but this is achieved through three relative rotations $e_ {1}$ of connected hinges drawn as cans in series, whereas the beam itself is rigid. Figure adapted from Jonker and Meijaard [[2]](#references)|
+| <a name="figure1"></a> **Figure 1**. Reference beam configuration (left) and two representations of deformed beam configurations (middle and right). The beam configuration in the middle shows six deformation modes for a flexible beam element: elongation $e_ {1}$, torsion $e_ {2}$, and bending $e_ {3-6}$. The beam configuration on the right is similar to the configuration in the middle, but this is achieved through three relative rotations $e_ {1}$ of connected hinges drawn as cans in series, whereas the beam itself is rigid. Figure adapted from Jonker and Meijaard [[2]](#references).|
 
 ### Finite element representation
 For flexible multibody models, the instrument can be modelled as a set of flexible (planar) beam elements with the SPACAR command $\text{BEAM}$. In this case, deformations in all directions are permitted with exception of elongation (i.e. beams are inextensible) \[[Fig. 1](#figure1)\]. In the case of rigid multibody models, the instrument can be modelled as a set of rigid multibody links \( $\text{RBEAM}$ \) interconnected with three hinge elements (with perpendicular axes) \( $\text{HINGE}$ \) \[[Fig. 1](#figure1)\]. The bending stiffness of a joint in the rigid multibody models can be found by equalling the strain energy resulting from bending a flexible beam element with the energy stored by a torsion spring [[3]](#references):
@@ -78,28 +78,45 @@ Similarly, the stiffness of the torsion springs in the axial direction of the in
 To guide the flexible instruments through the channels, contact points must be determined, loads must be calculated and translated to loads on the nodes of the model.  For each node of the instrument, $\boldsymbol{x}^p$, the Euclidean distance to the centreline is computed using the MATLAB function $\text{distance2curve}$ [[4]](#references). This function returns the distance to the centreline, $d_c$, and the closest point on the centreline p^p. The centreline of the channel may be modelled as any type of curve, e.g. a piecewise curve. The normal and tangent vectors, which are required for the normal and friction forces respectively, can then be obtained via:
 
 $$
-\boldsymbol{n} = \frac{\boldsymbol{x}^p-\boldsymbol{p}^p}{||\boldsymbol{x}^p-\boldsymbol{p}^p||}, \text{  } \boldsymbol{t} = \frac{\boldsymbol{\dot{x}}^p-v_ {c,n} \boldsymbol{n}}{||\boldsymbol{\dot{x}}^p-v_ {c,n} \boldsymbol{n}||}
+\boldsymbol{n} = \frac{\boldsymbol{x}^p-\boldsymbol{p}^p}{||\boldsymbol{x}^p-\boldsymbol{p}^p||}, \text{  } \boldsymbol{t} = \frac{\boldsymbol{\dot{x}}^p-v_ {c,n} \boldsymbol{n}}{||\boldsymbol{\dot{x}}^p-v_ {c,n} \boldsymbol{n}||} \tag{8}
 $$
 
 Here, $v_ {c,t}$ and $v_ {c,n}$ are determined from the instantaneous velocity $\boldsymbol{v}_ {c}$ at the point of contact:
 
 $$
-v_c=x ̇^p+2r_o ω^p×n #(4) )
+\boldsymbol{v}_ {c} = \boldsymbol{\dot{x}}^p + r_o \boldsymbol{ω}^p \times \boldsymbol{n} \tag{9}
 $$
 
-Where, (0,ω^p )^T=〖Q ̅^p〗^T λ ̇^p, and Q ̅^p is a quaternion matrix.44 To aid the convergence of SPACAR, the contact model by Khatait et al. distinguishes three different regions, characterised by the parameters a and b (see Fig. 3):30
-	No contact: d_c<a;
-	Transition zone: a≤d_c≤b. Here the wall stiffness and damping increase with increasing centreline deviation according to a second order polynomial;
-	Full contact zone:  b<d_c. Here the wall stiffness is linear in penetration depth.
-To include the thickness of the instrument we write: a=r_a-r_o and b=r_b-r_o. Here, r_o is the outer radius of the instrument, r_b marks the radius of the channel and r_a is a parameter freely chosen by the user to mark the transition zone. Note that this is a simplification which assumes that the longitudinal axes of the instrument and channel are locally parallel to each other. As this is most critical at the tip of the instrument, a small correction is applied. The resulting normal force is defined as a function of the dimensionless centreline deviation ζ=(d_c-a)/(b-a):
-█(F_n=F_n  n,F_n= {■(                              0                            if d_c<a@-(k/2)(b-a) ζ^2-c_w (3-2ζ) ζ^2 v_(c,n)   if a≤d_c≤b@  -k(b-a)(ζ-1/2)-c_w v_(c,n)        if b<d_c )           ┤#(5) )
-Here, k and c_w are the wall stiffness and damping coefficient respectively. The friction model used by Khatait et al. is adapted in this work to also include the Stribeck friction effect (without viscous friction):45
-█(F_t=F_t t,    F_t=-[√2e (F_n μ_s-F_n μ_k )  exp⁡(-(v_(c,t)/(v_brk √2))^2 ) ┤ ├ ∙v_(c,t)/(v_brk √2)+F_n μ_k  tanh⁡(v_(c,t)/(v_brk/10)) ]    #(6))
-Where, μ_s and μ_k are the static and kinematic friction coefficients respectively. The breakaway velocity v_brk is chosen as to aid convergence of the simulations. 
+The angular velocity is calculated from the Euler parameters via $(0,\boldsymbol{ω}^p)^T= \bar{\boldsymbol{Q}}^{p^{T}} \boldsymbol{\dot{\lambda}}^p$, where $\bar{\boldsymbol{Q}}^{p}$ is a quaternion matrix [[5]](#references). Normal forces are computed using the contact model by Khatait et al. which distinguishes three different regions, characterised by the parameters $a$ and $b$ (see Fig. 2) [[6]](#references). This model assumes that the normal force increases linearly with increasing wall penetration. A transition region in-between is considered to aid the convergence of SPACAR:
+- No contact: $d_c \< a$;
+* Transition zone: $a≤d_c≤b$. Here the wall stiffness and damping increase with increasing centreline deviation according to a second order polynomial;
++ Full contact zone:  $b \< d_c$. Here the wall stiffness is linear in penetration depth.
+
+To include the thickness of the instrument we write: $a=r_a-r_o$ and $b=r_b-r_o$. Here, $r_o$ is the outer radius of the instrument, $r_b$ marks the radius of the channel and $r_a$ is a parameter freely chosen by the user to mark the transition zone. Note that this is a simplification which assumes that the longitudinal axes of the instrument and channel are locally parallel to each other. As this is most critical at the tip of the instrument, a small correction is applied. The resulting normal force is defined as a function of the dimensionless centreline deviation $ζ=\frac{d_c-a}{b-a}$:
+
+$$
+\boldsymbol{F}_ {n}= F_n \boldsymbol{n}, \text{  } F_n = {\left\lbrace \matrix{0, & \text{if} \text{   } d_c \< a \cr - \frac{k}{2} (b-a)ζ^2-c_w(3-2ζ)ζ^2 v_ {c,n}, & \text{   } \text{if} \text{   } a≤d_c≤b \cr -k(b-a)(ζ-\frac{1}{2})-c_w v_ {c,n}, & \text{   } \text{if} \text{   } b \< d_c} \right\rbrace} \tag{10}        
+$$
+
+Here, $k$ and $c_w$ are the wall stiffness and damping coefficient respectively. The friction model used by Khatait et al. is adapted in this work to also include the Stribeck friction effect (without viscous friction) [[7]](#references):
+
+$$
+\boldsymbol{F}_ {t}= F_t \boldsymbol{t}, \text{  } F_t =-\sqrt{2e}F_n(\mu_s-\mu_k) \text{exp}(-(\frac{v_ {c,t}}{v_ {brk} \sqrt{2}})^2) ⋅ \frac{v_ {c,t}}{v_ {brk} \sqrt{2}} + F_n \mu_k \text{tanh}(\frac{v_ {c,t}}{\frac{v_ {brk}}{10}}) \tag{11}
+$$
+
+Where, $\mu_s$ and $\mu_k$ are the static and kinematic friction coefficients respectively. The breakaway velocity $v_ {brk}$ is chosen as to aid convergence of the simulations. 
 
 As the instrument has a certain thickness, the forces acting on the point of contact result in a moment around the node. As a result, the forces at the contact point can be modelled with the following equivalent loads on the node:
-█({■(F=F_t+F_n@M=r_o n×F_t ) ┤#(7) )
-The extension of this model to channels with convex polygonal cross-sections is feasible with a series of if-statements [Fig. 3].  
+
+$$
+{\left\lbrace \matrix{ \boldsymbol{F} = \boldsymbol{F}_ {t} + \boldsymbol{F}_ {n} \cr \boldsymbol{M} = r_o \boldsymbol{n} \times \boldsymbol{F}_ {t} } \right\rbrace} \tag{12}   
+$$
+
+The extension of this model to channels with convex polygonal cross-sections can be done relatively easy with a series of if-statements.  
+
+| <img src="20210607_RS_PSD_BeamDeformation_V5.png" width="445" height="350">|
+|:--:| 
+| <a name="figure2"></a> **Figure 2**. (a) Contact detection model for circular and U-shaped channels, (b)  Normal force model in a circular channel. Figure adapted from Khatait et al. [[6]](#references).|
 
 ## Implementation
 
@@ -112,6 +129,11 @@ The extension of this model to channels with convex polygonal cross-sections is 
 
 [2] Jonker B., Meijaard J.P. (2012). Deformation Modes and Dual Stress Resultants of Spatial Beam Elements in Large Deflection Multibody System Analyses.  In _Proceedings of the 2nd Joint International Conference on Multibody System Dynamics_. p. 1-10.
 
-[3] Alderliesten, T., Konings, M. K., & Niessen, W. J. (2004). Simulation of minimally invasive vascular interventions for training purposes. _Computer Aided Surgery_, 9(1-2), p. 3-15.
+[3] Alderliesten, T., Konings, M.K., & Niessen, W.J. (2004). Simulation of minimally invasive vascular interventions for training purposes. _Computer Aided Surgery_, 9(1-2), p. 3-15.
 
 [4] D'Errico, J. (2021). _distance2curve_. MATLAB Central File Exchange ([link](https://nl.mathworks.com/matlabcentral/fileexchange/34869-distance2curve)).
+
+[5] Schwab, A.L., Meijaard, J.P. (2006). How to draw Euler angles and utilize Euler parameters. In _International Design Engineering Technical Conferences and Computers and Information in Engineering Conference (Vol. 42568)_. p. 259-265.
+
+[6] Khatait, J.P., Krijnen, M., Meijaard, J.P., Aarts, R.G., Brouwer, D.M., & Herder, J.L. (2011, January). Modelling and simulation of a flexible endoscopic surgical instrument in a tube. In _ASME International Mechanical Engineering Congress and Exposition (Vol. 54884)_. p. 557-566.
+
