@@ -40,15 +40,30 @@ $$
 To guarantee that the configuration and deformations remain interlinked, an iteration process using a Newton-Raphson scheme is applied in SPACAR to ensure that $\boldsymbol{D}^{(m)} (\boldsymbol{x}_ 1)=\boldsymbol{e}_ 1^{(m)}$ holds. This scheme is then applied to calculate the sequence of generalised coordinates $(\boldsymbol{x}^{(m)},\boldsymbol{e}^{(m)})$.
 
 ### Dynamics
-In the forward dynamic analysis, we want to obtain the mechanism’s configuration, velocities and accelerations from prescribed nodal loads through a set of equations of motion. These equations are derived from the Lagrangian form of d’Alembert’s principle of virtual work. For rigid elements this analysis is trivial and uses a lumped mass formulation. However, for flexible elements the dynamics are influenced by both their inertia and stiffness properties, and hence a consistent mass formulation is used in SPACAR. This assumes that the position along a flexible element can be described using polynomial interpolation. The derivation of the consistent mass matrix is based on the concept of virtual power. A three-dimensional deformed beam with nodes $p$ and $q$ can be described by six Cartesian coordinates $\[ \boldsymbol{x}^{p^{(k)}},\boldsymbol{x}^{q^{(k)}} \]$ and two sets of Euler parameters $\[ \lambda^{p^{(k)}},\lambda^{q^{(k)}} \]$. Additionally, six deformation modes can be distinguished for the beam: elongation $e_ 1^{(k)}$, torsion $e_ 2^{(k)}$, and four parameters for bending $e_ {3-6}^{(k)}$, (see Fig. 1). As such, we can define a position vector r^s that describes the location of point s at normalised distance ξ from point p of the deflected beam as a function of bending deformation modes e_(3-6) using cubic polynomial interpolation. From the principle of virtual work we then obtain:
-f∙x-σ∙DDx-ml 01rs∙rsdξ=0#(A.5)
-Here, the dot is used to denote the time derivative, f the nodal loads (including forces and torques), σ the stresses, and m the mass and l the length of the element. Stresses σ are calculated using Hooke’s law. The right part of Eq. A.5 can be further evaluated by differentiating r^s with respect to time (twice), to obtain the consistent mass matrices and convective inertia tensors associated with quadratic velocity terms. The equations of motion can now be derived again using the principle of virtual power, and after arranging:
-DFT M DF xmem=DFT f-fin-σ-σin #(A.6)
-Here, DF^T  M DF is the system mass matrix, containing both consistent and lumped mass matrices, and f_in and σ_in are the inertia forces and stresses respectively. Eq. A.6 can be integrated numerically to obtain the configuration and deformations of the mechanism and their velocities at an adjacent time step. Finally, reaction forces and internal stresses may be calculated from kinetostatic analysis.
+In the forward dynamic analysis, we want to obtain the mechanism’s configuration, velocities and accelerations from prescribed nodal loads through a set of equations of motion. These equations are derived from the Lagrangian form of d’Alembert’s principle of virtual work. For rigid elements this analysis is trivial and uses a lumped mass formulation. However, for flexible elements the dynamics are influenced by both their inertia and stiffness properties, and hence a consistent mass formulation is used in SPACAR. This assumes that the position along a flexible element can be described using polynomial interpolation. The derivation of the consistent mass matrix is based on the concept of virtual power. A three-dimensional deformed beam with nodes $p$ and $q$ can be described by six Cartesian coordinates $\[ \boldsymbol{x}^{p^{(k)}},\boldsymbol{x}^{q^{(k)}} \]$ and two sets of Euler parameters $\[ \lambda^{p^{(k)}},\lambda^{q^{(k)}} \]$. Additionally, six deformation modes can be distinguished for the beam: elongation $e_ 1^{(k)}$, torsion $e_ 2^{(k)}$, and four parameters for bending $e_ {3-6}^{(k)}$, (see [Fig. 1](#figure1)). As such, we can define a position vector $\boldsymbol{r}^s$ that describes the location of point $s$ at normalised distance $ξ$ from point $p$ of the deflected beam as a function of bending deformation modes $e_ {3-6}$ using cubic polynomial interpolation. From the principle of virtual work we then obtain:
 
-| ![fig 1](https://static.semrush.com/blog/uploads/media/1a/34/1a34af151971419a8b8535603ab5b516/Google-image-upload-reverse.png)|
+$$
+\boldsymbol{f}⋅\boldsymbol{\dot{x}}-\boldsymbol{σ}⋅\text{D}\boldsymbol{D}\boldsymbol{\dot{x}}-ml \int_{0}^{1} \boldsymbol{\dot{r}}^s⋅\boldsymbol{\ddot{r}}^s \text{d}ξ = 0 \tag{4}
+$$
+
+Here, the dot is used to denote the time derivative, $\boldsymbol{f}$ the nodal loads (including forces and torques), $\boldsymbol{σ}$ the stresses, and $m$ the mass and $l$ the length of the element. Stresses $\boldsymbol{σ}$ are calculated using Hooke’s law. The right part of Eq. (4) can be further evaluated by differentiating $\boldsymbol{r}^s$ with respect to time (twice), to obtain the consistent mass matrices and convective inertia tensors associated with quadratic velocity terms. The equations of motion can now be derived again using the principle of virtual power, and after arranging:
+
+$$
+\text{D}\boldsymbol{F}^T \boldsymbol{M} \text{D}\boldsymbol{F} {\left\lbrack \matrix{\boldsymbol{\ddot{x}}^{(m)} \cr \boldsymbol{\ddot{e}}^{(m)}} \right\rbrack}=\text{D}\boldsymbol{F}^T {\left\lbrack \matrix{\boldsymbol{f}+\boldsymbol{f}_{in} \cr -\boldsymbol{σ}-\boldsymbol{σ}_{in}} \right\rbrack} \tag{5}
+$$
+
+
+Here, $\text{D}\boldsymbol{F}^T \boldsymbol{M} \text{D}\boldsymbol{F}$ is the system mass matrix, containing both consistent and lumped mass matrices, and $\boldsymbol{f}_ {in}$ and $\boldsymbol{σ}_ {in}$ are the inertia forces and stresses respectively. Eq. (5) can be integrated numerically to obtain the configuration and deformations of the mechanism and their velocities at an adjacent time step. Finally, reaction forces and internal stresses may be calculated from kinetostatic analysis.
+
+| <img src="20210607_RS_PSD_BeamDeformation_V5.png" width="445" height="350">|
 |:--:| 
-| Reference beam configuration (left) and two representations of deformed beam configurations (middle and right). The beam configuration in the middle shows six deformation modes for a flexible beam element: elongation $e_ {1}$, torsion $e_ {2}$, and bending $e_ {3-6}$. The beam configuration on the right is similar to the configuration in the middle, but this is achieved through three relative rotations $e_ {1}$ of connected hinges drawn as cans in series, whereas the beam itself is rigid. Figure adapted from Jonker and Meijaard [[2]](#references)|
+| <a name="figure1"></a> **Figure 1**. Reference beam configuration (left) and two representations of deformed beam configurations (middle and right). The beam configuration in the middle shows six deformation modes for a flexible beam element: elongation $e_ {1}$, torsion $e_ {2}$, and bending $e_ {3-6}$. The beam configuration on the right is similar to the configuration in the middle, but this is achieved through three relative rotations $e_ {1}$ of connected hinges drawn as cans in series, whereas the beam itself is rigid. Figure adapted from Jonker and Meijaard [[2]](#references)|
+
+### Finite element representation
+
+### Contact detection and friction model 
+
+## Implementation
 
 ## Requirements
 
@@ -57,4 +72,4 @@ Here, DF^T  M DF is the system mass matrix, containing both consistent and lumpe
 ## References
 [1] Jonker B. (1988). _A Finite Element Dynamic Analysis of Flexible Spatial Mechanisms and Manipulators_. (TR diss 1625) [Doctoral dissertation, Delft University of Technology]. Institutional Repository ([link](https://repository.tudelft.nl/islandora/object/uuid:3f9f742f-1692-4cb8-8dd7-95c2d6024fd0?collection=research/)). p. 1-155.
 
-[2] Jonker B., Meijaard J.P. (2012). _Deformation Modes and Dual Stress Resultants of Spatial Beam Elements in Large Deflection Multibody System Analyses_.  In Proceedings of the 2nd Joint International Conference on Multibody System Dynamics. p. 1-10.
+[2] Jonker B., Meijaard J.P. (2012). Deformation Modes and Dual Stress Resultants of Spatial Beam Elements in Large Deflection Multibody System Analyses.  In _Proceedings of the 2nd Joint International Conference on Multibody System Dynamics_. p. 1-10.
