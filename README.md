@@ -63,7 +63,7 @@ $$
 
 Here, $\text{D}\boldsymbol{F}^T \boldsymbol{M} \text{D}\boldsymbol{F}$ is the system mass matrix, containing both consistent and lumped mass matrices, and $\boldsymbol{f}_ {in}$ and $\boldsymbol{σ}_ {in}$ are the inertia forces and stresses respectively. Eq. (5) can be integrated numerically to obtain the configuration and deformations of the mechanism and their velocities at an adjacent time step. Finally, reaction forces and internal stresses may be calculated from kinetostatic analysis.
 
-| <img src="20210607_RS_PSD_BeamDeformation_V5.png" width="445" height="350">|
+| <img src="20210607_RS_PSD_BeamDeformation.png" width="445" height="350">|
 |:--:| 
 | <a name="figure1"></a> **Figure 1**. Reference beam configuration (left) and two representations of deformed beam configurations (middle and right). The beam configuration in the middle shows six deformation modes for a flexible beam element: elongation $e_ {1}$, torsion $e_ {2}$, and bending $e_ {3-6}$. The beam configuration on the right is similar to the configuration in the middle, but this is achieved through three relative rotations $e_ {1}$ of connected hinges drawn as cans in series, whereas the beam itself is rigid. Figure adapted from Jonker and Meijaard [[2]](#references).|
 
