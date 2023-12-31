@@ -7,7 +7,7 @@ The code in this repository is a simplification of the code used in:
 - **Authors**: Robin Straathof, Jaap P. Meijaard, Sharline van Vliet-Pérez, Inger-Karine K. Kolkman-Deurloo, Remi A. Nout, Ben J.M. Heijmen, Linda S.G.L. Wauben, Jenny Dankelman, and Nick J. van de Berg.
 - **Journal**: Medical Physics
 - **DOI**: **FIXME**
-- **Cite repository**: **FIXME** (4TU.Researchdata)
+- **Cite repository**: [link](https://doi.org/10.4121/21714143) (4TU.Researchdata)
 - **License**: see license file in repository.
 
 ## About SPACAR
