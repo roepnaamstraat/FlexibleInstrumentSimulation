@@ -6,7 +6,7 @@ The code in this repository is a simplification of the code used in:
 - **Title**: Multibody dynamic modelling of the behaviour of flexible instruments used in cervical cancer brachytherapy.
 - **Authors**: Robin Straathof, Jaap P. Meijaard, Sharline van Vliet-Pérez, Inger-Karine K. Kolkman-Deurloo, Remi A. Nout, Ben J.M. Heijmen, Linda S.G.L. Wauben, Jenny Dankelman, and Nick J. van de Berg.
 - **Journal**: Medical Physics
-- **DOI**: **FIXME**
+- **DOI**: **FIXME** (will be published soon)
 - **Cite repository**: [link](https://doi.org/10.4121/21714143) (4TU.Researchdata)
 - **License**: see license file in repository.
 
